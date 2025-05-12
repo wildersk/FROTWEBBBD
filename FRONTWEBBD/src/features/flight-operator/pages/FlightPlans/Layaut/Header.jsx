@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import ActionButtons from "../ActionButtons/ActionButtons";
+import ActionButtons from "../../ActionButtons/ActionButtons";
 
 const Header = () => {
   return (
