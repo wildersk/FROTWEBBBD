@@ -27,6 +27,8 @@ const Dashboard = () => {
                 <span>
                   {plan.origin} → {plan.destination}
                 </span>
+                <span>Fecha: {plan.date}</span>
+                <span>Hora: {plan.time}</span>
                 <div>
                   <Link
                     to={`/flight-operator/flight-plans/edit/${plan.id}`}
@@ -40,6 +42,12 @@ const Dashboard = () => {
                   >
                     Eliminar
                   </Link>
+                  <button
+                    onClick={() => handleSendToDGAC(plan.id)}
+                    className={styles.editLink}
+                  >
+                    Enviar a la DGAC
+                  </button>
                 </div>
               </li>
             ))}
@@ -48,6 +56,11 @@ const Dashboard = () => {
       </div>
     </div>
   );
+
+  function handleSendToDGAC(planId) {
+    // Implementar lógica para enviar el plan a la DGAC
+    console.log(`Enviando plan ${planId} a la DGAC`);
+  }
 };
 
 export default Dashboard;

@@ -16,8 +16,11 @@ const CreateFlightPlan = () => {
   const [piloto, setPiloto] = useState("");
   const [fechaSalida, setFechaSalida] = useState("");
   const [fechaLlegada, setFechaLlegada] = useState("");
+  const [aerolinea, setAerolinea] = useState("");
+  const [pista, setPista] = useState("");
 
   const tiposAvion = ["Comercial", "Privado", "Carga"];
+  const estadosContrato = ["Autorizado", "Pendiente"];
   const avionesPorTipo = {
     Comercial: ["Boeing 747", "Airbus A320"],
     Privado: ["Cessna Citation", "Gulfstream G650"],
@@ -75,6 +78,7 @@ const CreateFlightPlan = () => {
       avion,
       escalas,
       piloto,
+      añadirDestido,
       fechaSalida,
       fechaLlegada,
     };
@@ -96,6 +100,9 @@ const CreateFlightPlan = () => {
           className={styles.input}
         />
 
+        <label className={styles.label}>Tarifa:</label>
+        <input type="number" placeholder="Ej. 500" className={styles.input} />
+
         <label className={styles.label}>Origen:</label>
         <input
           type="text"
@@ -105,13 +112,13 @@ const CreateFlightPlan = () => {
           className={styles.input}
         />
 
-        <label className={styles.label}>Tipo de Avión:</label>
+        <label className={styles.label}>Añadir Avión:</label>
         <select
           value={tipoAvion}
           onChange={(e) => setTipoAvion(e.target.value)}
           className={styles.select}
         >
-          <option value="">Seleccionar</option>
+          <option value="">Seleccionar Tipo de Avión</option>
           {tiposAvion.map((tipo) => (
             <option key={tipo} value={tipo}>
               {tipo}
@@ -205,6 +212,13 @@ const CreateFlightPlan = () => {
             </option>
           ))}
         </select>
+
+        <label className={styles.label}>Destino:</label>
+        <input
+          type="text"
+          placeholder="Ciudad de destino"
+          className={styles.input}
+        />
 
         <label className={styles.label}>Fecha de Salida:</label>
         <input

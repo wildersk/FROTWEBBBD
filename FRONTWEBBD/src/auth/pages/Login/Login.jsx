@@ -24,34 +24,44 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginBox}>
-        <h2>Iniciar Sesión</h2>
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h1 className={styles.title}>Iniciar Sesión</h1>
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          <div className={styles.formGroup}>
-            <label>Usuario:</label>
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="username">
+              Usuario:
+            </label>
             <input
+              id="username"
               type="text"
+              className={styles.input}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="operador o admin"
+              required
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label>Contraseña:</label>
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="password">
+              Contraseña:
+            </label>
             <input
+              id="password"
               type="password"
+              className={styles.input}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="123"
+              required
             />
           </div>
 
-          <button type="submit" className={styles.loginButton}>
+          <button type="submit" className={styles.button}>
             Ingresar
           </button>
         </form>

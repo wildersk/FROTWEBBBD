@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useFlightPlans } from "../../../../hooks/useFlightPlans";
+import { useFlightPlans } from "../../../hooks/useFlightPlans";
 import FlightPlanForm from "../../../components/FlightPlanForm/FlightPlanForm";
 import styles from "./Edit.module.css";
 
@@ -21,13 +21,14 @@ const EditFlightPlan = () => {
 
   return (
     <div className={styles.pageContainer}>
-      <h1>Editar Plan de Vuelo {flightPlan.flightNumber}</h1>
-      <FlightPlanForm
-        initialData={flightPlan}
-        onSubmit={handleSubmit}
-        onCancel={() => navigate("/flight-operator/dashboard")}
-        isEditing={true}
-      />
+      <h1>Planes de Vuelo Creados</h1>
+      <ul>
+        {flightPlans.map((plan) => (
+          <li key={plan.id}>
+            {plan.flightNumber} - {plan.destination}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
