@@ -40,7 +40,7 @@ const CreateRegin = () => {
   return (
     <div style={styles.container}>
       <form style={styles.form} onSubmit={handleSubmit}>
-        <h2 style={styles.title}>Registrar Arresto</h2>
+        <h2 style={styles.title}>Registrar Incidente</h2>
 
         <label style={styles.label}>Seleccionar tipo incidente</label>
         <select
@@ -58,10 +58,10 @@ const CreateRegin = () => {
           ))}
         </select>
 
-        <label style={styles.label}>Seleccionar tipo accidente</label>
+        <label style={styles.label}>Seleccionar Aeropuerto</label>
         <select
-          name="tipoAccidente"
-          value={form.tipoAccidente}
+          name="aeropuerto"
+          value={form.aeropuerto}
           onChange={handleChange}
           style={styles.input}
           required
@@ -79,6 +79,16 @@ const CreateRegin = () => {
           type="text"
           name="nombre"
           value={form.nombre}
+          onChange={handleChange}
+          style={styles.input}
+          required
+        />
+
+        <label style={styles.label}>Ingresar Descripcion</label>
+        <input
+          type="text"
+          name="nombre"
+          value={form.descripcion}
           onChange={handleChange}
           style={styles.input}
           required
@@ -116,21 +126,30 @@ const CreateRegin = () => {
 const styles = {
   container: {
     minHeight: "100vh",
+    minWidth: "100vw",
+    width: "100vw",
+    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     background: "#f4f6fb",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    zIndex: 1000,
   },
   form: {
     background: "#fff",
     padding: "2rem",
     borderRadius: "8px",
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-    width: "100%",
-    maxWidth: "400px",
+    width: "100vw",
+    maxWidth: "100vw",
+    minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
+    justifyContent: "center",
   },
   title: {
     marginBottom: "1rem",
