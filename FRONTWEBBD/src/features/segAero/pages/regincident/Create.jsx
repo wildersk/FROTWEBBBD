@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const apiBase = "https://your-api-url.com"; // Cambia esto por tu endpoint real
 
-const Create = () => {
+const CreateRegin = () => {
   const [tiposIncidente, setTiposIncidente] = useState([]);
   const [tiposAccidente, setTiposAccidente] = useState([]);
   const [form, setForm] = useState({
@@ -160,4 +160,4 @@ const styles = {
   },
 };
 
-export default Create;
+export default CreateRegin;
