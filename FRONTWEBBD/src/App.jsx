@@ -33,6 +33,11 @@ const AdminDashboard = lazy(() =>
   import("./features/system-admin/pages/Dashboard/Dashboard")
 );
 
+// paginas de DGAC (ejemplo)
+const DgacDashboard = lazy(() =>
+  import("./features/DGAC/pages/Dashboard/Dashboard")
+);
+
 function App() {
   return (
     <Router>
@@ -43,7 +48,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
-
             {/* Rutas protegidas para operador de vuelos */}
             <Route element={<RoleGuard allowedRoles={["flight_operator"]} />}>
               <Route
@@ -63,7 +67,6 @@ function App() {
                 element={<DeleteFlightPlan />}
               />
             </Route>
-
             {/* Rutas protegidas para administrador */}
             <Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
               <Route
@@ -72,7 +75,10 @@ function App() {
               />
               {/* Agregar más rutas de admin aquí */}
             </Route>
-
+            // Rutas protegidas para DGAC
+            <Route element={<RoleGuard allowedRoles={["DGAC"]} />}>
+              <Route path="/dgac/dashboard" element={<DgacDashboard />} />
+            </Route>
             {/* Redirecciones */}
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<Navigate to="/unauthorized" replace />} />

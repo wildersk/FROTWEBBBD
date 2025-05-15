@@ -88,6 +88,22 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   // Función de login simulada
+  // Removed duplicate login function
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
+  // Verificar si hay usuario al cargar
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const login = (username, password) => {
     // Simulamos validación
     if (username === "operador" && password === "123") {
@@ -112,22 +128,19 @@ export const AuthProvider = ({ children }) => {
       return true;
     }
 
+    if (username === "dgac" && password === "123") {
+      const userData = {
+        name: "DGAC",
+        role: "dgac",
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/dgac/dashboard");
+      return true;
+    }
+
     return false; // Login fallido
   };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
-  // Verificar si hay usuario al cargar
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>

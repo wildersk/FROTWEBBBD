@@ -25,6 +25,12 @@ export const AuthProvider = ({ children }) => {
         role: "system_admin",
         name: "Administrador",
       };
+    } else if (username === "DGAC" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "DGAC",
+        name: "DGAC",
+      };
     }
 
     if (authenticatedUser) {
@@ -36,6 +42,8 @@ export const AuthProvider = ({ children }) => {
         navigate("/flight-operator/dashboard");
       } else if (authenticatedUser.role === "system_admin") {
         navigate("/system-admin/dashboard");
+      } else if (authenticatedUser.role === "DGAC") {
+        navigate("/DGAC/dashboard");
       }
 
       return true;
