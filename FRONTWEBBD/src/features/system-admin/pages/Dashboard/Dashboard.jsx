@@ -1,29 +1,30 @@
-import React from "react";
+import { Link } from 'react-router-dom';
 
-const menuOptions = [
-  { label: "Aerolinea", path: "/aerolinea" },
-  { label: "Aeropuerto", path: "/aeropuerto" },
-  { label: "Contratos", path: "/contratos" },
-  { label: "Naves", path: "/naves" },
-];
-
-const Dashboard = () => {
-  return (
-    <nav style={{ padding: "2rem" }}>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {menuOptions.map((option) => (
-          <li key={option.label} style={{ margin: "1rem 0" }}>
-            <a
-              href={option.path}
-              style={{ textDecoration: "none", fontSize: "1.2rem" }}
-            >
-              {option.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
+const AdminDashboard = () => {
+    return (
+        <nav>
+            <ul>
+                <li key="aeropuertos">
+                    <Link to="/system-admin/Aeropuertos">Aeropuertos</Link>
+                </li>
+                <li key="aerolineas">
+                    <Link to="/system-admin/Aerolineas">Aerolíneas</Link>
+                </li>
+                <li key="contratos">
+                    <Link to="/system-admin/Contratos">Contratos</Link>
+                </li>
+                <li key="modelos-avion">
+                    <Link to="/system-admin/ModelosAvion">Modelos de Avión</Link>
+                </li>
+                <li key="pistas">
+                    <Link to="/system-admin/Pistas">Pistas</Link>
+                </li>
+                <li key="usuarios">
+                    <Link to="/system-admin/Usuarios">Usuarios</Link>
+                </li>
+            </ul>
+        </nav>
+    );
 };
 
-export default Dashboard;
+export default AdminDashboard;

@@ -30,7 +30,25 @@ const DeleteFlightPlan = lazy(() =>
 
 // Páginas del administrador (ejemplo)
 const AdminDashboard = lazy(() =>
-  import("./features/system-admin/pages/Dashboard/Dashboard")
+  import("./features/system-admin/pages/Dashboard/AdminDashboard")
+);
+const Aeropuertos = lazy(() =>
+  import("./features/system-admin/pages/Aeropuertos/Aeropuertos")
+);
+const Aerolineas = lazy(() =>
+  import("./features/system-admin/pages/Aerolineas/Aerolineas")
+);
+const ModelosAvion = lazy(() =>
+  import("./features/system-admin/pages/ModelosAvion/ModelosAvion")
+);
+const Pistas = lazy(() =>
+  import("./features/system-admin/pages/Pistas/Pistas")
+);
+const Usuarios = lazy(() =>
+  import("./features/system-admin/pages/Usuarios/Usuarios")
+);
+const Contratos = lazy(() =>
+  import("./features/system-admin/pages/Contratos/Contratos")
 );
 
 // paginas de DGAC (ejemplo)
@@ -78,13 +96,15 @@ function App() {
               />
             </Route>
             {/* Rutas protegidas para administrador */}
-            <Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
-              <Route
-                path="/system-admin/dashboard"
-                element={<AdminDashboard />}
-              />
-              {/* Agregar más rutas de admin aquí */}
-            </Route>
+<Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
+  <Route path="/system-admin/dashboard" element={<AdminDashboard />} />
+  <Route path="/system-admin/Aeropuertos" element={<Aeropuertos />} />
+  <Route path="/system-admin/Aerolineas" element={<Aerolineas />} />
+  <Route path="/system-admin/ModelosAvion" element={<ModelosAvion />} />
+  <Route path="/system-admin/Pistas" element={<Pistas />} />
+  <Route path="/system-admin/Usuarios" element={<Usuarios />} />
+  <Route path="/system-admin/Contratos" element={<Contratos />} />
+</Route>
             /* Rutas protegidas para DGAC */
             <Route element={<RoleGuard allowedRoles={["DGAC"]} />}>
               <Route path="/dgac/dashboard" element={<DgacDashboard />} />
