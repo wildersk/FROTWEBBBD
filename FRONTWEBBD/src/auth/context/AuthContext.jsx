@@ -31,6 +31,18 @@ export const AuthProvider = ({ children }) => {
         role: "DGAC",
         name: "DGAC",
       };
+    } else if (username === "segAero" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "segAero",
+        name: "SegAero",
+      };
+    } else if (username === "usuReports" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "usuReports",
+        name: "usureports",
+      };
     }
 
     if (authenticatedUser) {
@@ -44,6 +56,10 @@ export const AuthProvider = ({ children }) => {
         navigate("/system-admin/dashboard");
       } else if (authenticatedUser.role === "DGAC") {
         navigate("/DGAC/dashboard");
+      } else if (authenticatedUser.role === "segAero") {
+        navigate("/segAero/dashboard");
+      } else if (authenticatedUser.role === "usuReports") {
+        navigate("/usuReports/dashboard");
       }
 
       return true;

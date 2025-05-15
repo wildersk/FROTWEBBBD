@@ -38,6 +38,16 @@ const DgacDashboard = lazy(() =>
   import("./features/DGAC/pages/Dashboard/Dashboard")
 );
 
+// Páginas de segAero (ejemplo)
+const SegAeroDashboard = lazy(() =>
+  import("./features/segAero/pages/Dashboard/Dashboard")
+);
+
+// paginas de usureports (ejemplo)
+const UsuReportsDashboard = lazy(() =>
+  import("./features/usuReports/pages/Dashboard/Dashboard")
+);
+
 function App() {
   return (
     <Router>
@@ -75,9 +85,20 @@ function App() {
               />
               {/* Agregar más rutas de admin aquí */}
             </Route>
-            // Rutas protegidas para DGAC
+            /* Rutas protegidas para DGAC */
             <Route element={<RoleGuard allowedRoles={["DGAC"]} />}>
               <Route path="/dgac/dashboard" element={<DgacDashboard />} />
+            </Route>
+            {/* Rutas protegidas para segAero */}
+            <Route element={<RoleGuard allowedRoles={["segAero"]} />}>
+              <Route path="/segaero/dashboard" element={<SegAeroDashboard />} />
+            </Route>
+            {/* Rutas protegidas para usureports*/}
+            <Route element={<RoleGuard allowedRoles={["usuReports"]} />}>
+              <Route
+                path="/usureports/dashboard"
+                element={<UsuReportsDashboard />}
+              />
             </Route>
             {/* Redirecciones */}
             <Route path="/" element={<Navigate to="/login" replace />} />

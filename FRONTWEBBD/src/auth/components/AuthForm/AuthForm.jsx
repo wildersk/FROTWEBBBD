@@ -139,6 +139,17 @@ export const AuthProvider = ({ children }) => {
       return true;
     }
 
+    if (username === "segaero" && password === "123") {
+      const userData = {
+        name: "SEGAERO",
+        role: "segaero",
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/segaero/dashboard");
+      return true;
+    }
+
     return false; // Login fallido
   };
 
