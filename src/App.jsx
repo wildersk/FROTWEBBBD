@@ -33,42 +33,24 @@ const AdminDashboard = lazy(() =>
   import("./features/system-admin/pages/Dashboard/AdminDashboard")
 );
 const Aeropuertos = lazy(() =>
-  import("./features/system-admin/pages/Aeropuertos/Aeropuertos")
+  import("./features/system-admin/pages/Aeropuertos")
 );
 const Aerolineas = lazy(() =>
-  import("./features/system-admin/pages/Aerolineas/Aerolineas")
+  import("./features/system-admin/pages/Aerolineas")
 );
-const ModelosAvion = lazy(() =>
-  import("./features/system-admin/pages/ModelosAvion/ModelosAvion")
+const ModelosAvion = lazy(() => 
+  import("./features/system-admin/pages/ModelosAvion")
 );
 const Pistas = lazy(() =>
-  import("./features/system-admin/pages/Pistas/Pistas")
+  import("./features/system-admin/pages/Pistas")
 );
 const Usuarios = lazy(() =>
-  import("./features/system-admin/pages/Usuarios/Usuarios")
+  import("./features/system-admin/pages/Usuarios")
 );
 const Contratos = lazy(() =>
-  import("./features/system-admin/pages/Contratos/Contratos")
+  import("./features/system-admin/pages/Contratos")
 );
 
-// paginas de DGAC (ejemplo)
-const DgacDashboard = lazy(() =>
-  import("./features/DGAC/pages/Dashboard/Dashboard")
-);
-
-// Páginas de segAero (ejemplo)
-const SegAeroDashboard = lazy(() =>
-  import("./features/segAero/pages/Dashboard/Dashboard")
-);
-
-const CreateRegin = lazy(() =>
-  import("./features/segAero/pages/regincident/Create")
-);
-
-// paginas de usureports (ejemplo)
-const UsuReportsDashboard = lazy(() =>
-  import("./features/usuReports/pages/Dashboard/Dashboard")
-);
 
 function App() {
   return (
@@ -80,6 +62,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
+
             {/* Rutas protegidas para operador de vuelos */}
             <Route element={<RoleGuard allowedRoles={["flight_operator"]} />}>
               <Route
@@ -99,33 +82,18 @@ function App() {
                 element={<DeleteFlightPlan />}
               />
             </Route>
+
             {/* Rutas protegidas para administrador */}
-            <Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
-              <Route
-                path="/system-admin/dashboard"
-                element={<AdminDashboard />}
-              />
-              {/* Agregar más rutas de admin aquí */}
-            </Route>
-            /* Rutas protegidas para DGAC */
-            <Route element={<RoleGuard allowedRoles={["DGAC"]} />}>
-              <Route path="/dgac/dashboard" element={<DgacDashboard />} />
-            </Route>
-            {/* Rutas protegidas para segAero */}
-            <Route element={<RoleGuard allowedRoles={["segAero"]} />}>
-              <Route path="/segaero/dashboard" element={<SegAeroDashboard />} />
-              <Route
-                path="/segaero/regincident/create"
-                element={<CreateRegin />}
-              />
-            </Route>
-            {/* Rutas protegidas para usureports*/}
-            <Route element={<RoleGuard allowedRoles={["usuReports"]} />}>
-              <Route
-                path="/usureports/dashboard"
-                element={<UsuReportsDashboard />}
-              />
-            </Route>
+<Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
+  <Route path="/system-admin/dashboard" element={<AdminDashboard />} />
+  <Route path="/system-admin/Aeropuertos" element={<Aeropuertos />} />
+  <Route path="/system-admin/Aerolineas" element={<Aerolineas />} />
+  <Route path="/system-admin/ModelosAvion" element={<ModelosAvion />} />
+  <Route path="/system-admin/Pistas" element={<Pistas />} />
+  <Route path="/system-admin/Usuarios" element={<Usuarios />} />
+  <Route path="/system-admin/Contratos" element={<Contratos />} />
+</Route>
+
             {/* Redirecciones */}
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<Navigate to="/unauthorized" replace />} />
@@ -137,3 +105,25 @@ function App() {
 }
 
 export default App;
+/**
+ * Para aplicar las modificaciones de un repositorio a este proyecto, sigue estos pasos:
+ * 
+ * 1. Abre una terminal o línea de comandos.
+ * 2. Navega al directorio del proyecto local con el comando:
+ *    cd /c:/Users/Giovanny Morales/Desktop/PBD2/FROTWEBBBD/FRONTWEBBD
+ * 3. Asegúrate de que no tienes cambios sin guardar ejecutando:
+ *    git status
+ * 4. Si tienes cambios sin guardar, realiza un commit o guárdalos en un stash:
+ *    git add .
+ *    git commit -m "Guardando cambios locales"
+ *    o usa `git stash` para guardarlos temporalmente.
+ * 5. Descarga las actualizaciones del repositorio remoto con:
+ *    git pull origin <nombre-de-la-rama>
+ *    (Reemplaza <nombre-de-la-rama> con la rama que deseas actualizar, como "main" o "master").
+ * 6. Si hay conflictos, resuélvelos manualmente en los archivos afectados.
+ * 7. Una vez resueltos los conflictos (si los hay), confirma los cambios con:
+ *    git add .
+ *    git commit -m "Resolviendo conflictos"
+ * 
+ * Ahora tu proyecto estará actualizado con las modificaciones del repositorio remoto.
+ */

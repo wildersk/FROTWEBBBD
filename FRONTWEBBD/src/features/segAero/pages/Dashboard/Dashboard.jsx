@@ -8,7 +8,7 @@ const Dashboard = () => {
       <nav className={styles.menu}>
         <ul>
           <li>
-            <Link to="./regincident/Create" className={styles.menuLink}>
+            <Link to="/segaero/regincident/create" className={styles.menuLink}>
               <button className={styles.menuButton}>Crear Incidente</button>
             </Link>
           </li>
