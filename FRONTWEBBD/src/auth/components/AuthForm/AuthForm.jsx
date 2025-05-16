@@ -69,7 +69,27 @@ export const AuthProvider = ({ children }) => {
       navigate("/segaero/dashboard");
       return true;
     }
-
+    if (username === "controlvuelo" && password === "123") {
+      const userData = {
+        name: "Control de Vuelo",
+        role: "controlVuelo",
+      };
+      console.log("Login como:", userData);
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/controlvuelo/dashboard");
+      return true;
+    }
+    if (username === "check" && password === "123") {
+      const userData = {
+        name: "check",
+        role: "check",
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/check /dashboard");
+      return true;
+    }
     return false; // Login fallido
   };
 

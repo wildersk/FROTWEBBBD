@@ -43,6 +43,18 @@ export const AuthProvider = ({ children }) => {
         role: "usuReports",
         name: "usureports",
       };
+    } else if (username === "controlvuelo" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "controlVuelo",
+        name: "Control de Vuelo",
+      };
+    } else if (username === "check" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "check",
+        name: "Check",
+      };
     }
 
     if (authenticatedUser) {
@@ -60,6 +72,10 @@ export const AuthProvider = ({ children }) => {
         navigate("/segAero/dashboard");
       } else if (authenticatedUser.role === "usuReports") {
         navigate("/usuReports/dashboard");
+      } else if (authenticatedUser.role === "controlVuelo") {
+        navigate("/controlvuelo/dashboard");
+      } else if (authenticatedUser.role === "check") {
+        navigate("/check/dashboard");
       }
 
       return true;

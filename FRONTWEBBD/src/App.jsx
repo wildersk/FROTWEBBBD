@@ -41,15 +41,9 @@ const Aerolineas = lazy(() =>
 const ModelosAvion = lazy(() =>
   import("./features/system-admin/pages/ModelosAvion")
 );
-const Pistas = lazy(() =>
-  import("./features/system-admin/pages/Pistas")
-);
-const Usuarios = lazy(() =>
-  import("./features/system-admin/pages/Usuarios")
-);
-const Contratos = lazy(() =>
-  import("./features/system-admin/pages/Contratos")
-);
+const Pistas = lazy(() => import("./features/system-admin/pages/Pistas"));
+const Usuarios = lazy(() => import("./features/system-admin/pages/Usuarios"));
+const Contratos = lazy(() => import("./features/system-admin/pages/Contratos"));
 
 // paginas de DGAC (ejemplo)
 const DgacDashboard = lazy(() =>
@@ -68,6 +62,14 @@ const CreateRegin = lazy(() =>
 // paginas de usureports (ejemplo)
 const UsuReportsDashboard = lazy(() =>
   import("./features/usuReports/pages/Dashboard/Dashboard")
+);
+// Páginas de control de vuelo (ejemplo)
+const ControlVueloDashboard = lazy(() =>
+  import("./features/controlVuelo/pages/Dashboard/Dashboard")
+);
+// Páginas de check (ejemplo)
+const CheckDashboard = lazy(() =>
+  import("./features/checking/pages/Dashboard/Dashboard")
 );
 
 function App() {
@@ -99,20 +101,30 @@ function App() {
                 element={<DeleteFlightPlan />}
               />
             </Route>
-                        {/* Rutas protegidas para administrador */}
-<Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
-  <Route path="/system-admin/dashboard" element={<AdminDashboard />} />
-  <Route path="/system-admin/Aeropuertos" element={<Aeropuertos />} />
-  <Route path="/system-admin/Aerolineas" element={<Aerolineas />} />
-  <Route path="/system-admin/ModelosAvion" element={<ModelosAvion />} />
-  <Route path="/system-admin/Pistas" element={<Pistas />} />
-  <Route path="/system-admin/Usuarios" element={<Usuarios />} />
-  <Route path="/system-admin/Contratos" element={<Contratos />} />
-</Route>
+            {/* Rutas protegidas para administrador */}
+            <Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
+              <Route
+                path="/system-admin/dashboard"
+                element={<AdminDashboard />}
+              />
+              <Route
+                path="/system-admin/Aeropuertos"
+                element={<Aeropuertos />}
+              />
+              <Route path="/system-admin/Aerolineas" element={<Aerolineas />} />
+              <Route
+                path="/system-admin/ModelosAvion"
+                element={<ModelosAvion />}
+              />
+              <Route path="/system-admin/Pistas" element={<Pistas />} />
+              <Route path="/system-admin/Usuarios" element={<Usuarios />} />
+              <Route path="/system-admin/Contratos" element={<Contratos />} />
+            </Route>
             {/* Rutas protegidas para DGAC */}
             <Route element={<RoleGuard allowedRoles={["DGAC"]} />}>
               <Route path="/dgac/dashboard" element={<DgacDashboard />} />
             </Route>
+
             {/* Rutas protegidas para segAero */}
             <Route element={<RoleGuard allowedRoles={["segAero"]} />}>
               <Route path="/segaero/dashboard" element={<SegAeroDashboard />} />
@@ -128,6 +140,21 @@ function App() {
                 element={<UsuReportsDashboard />}
               />
             </Route>
+
+            <Route element={<RoleGuard allowedRoles={["controlVuelo"]} />}>
+              <Route
+                path="/controlvuelo/dashboard"
+                element={<ControlVueloDashboard />}
+              />
+              {/* Agrega aquí más rutas si tienes más páginas para este rol */}
+            </Route>
+            {/* Rutas protegidas para check */}
+
+            <Route element={<RoleGuard allowedRoles={["check"]} />}>
+              <Route path="/check/dashboard" element={<CheckDashboard />} />
+              {/* Agrega aquí más rutas si tienes más páginas para este rol */}
+            </Route>
+
             {/* Redirecciones */}
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<Navigate to="/unauthorized" replace />} />

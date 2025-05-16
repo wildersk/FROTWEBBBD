@@ -1,29 +1,50 @@
 import React, { useEffect, useState } from "react";
 
-const apiBase = "https://your-api-url.com"; // Cambia esto por tu endpoint real
+const apiBase = "http://localhost:3000/incidentes_tipos_incidente"; // Cambia esto por tu endpoint real
+const apiInsert = "http://localhost:3000/insertar_incidente_seguridad";
 
 const CreateRegin = () => {
   const [tiposIncidente, setTiposIncidente] = useState([]);
-  const [tiposAccidente, setTiposAccidente] = useState([]);
+
   const [form, setForm] = useState({
     tipoIncidente: "",
-    tipoAccidente: "",
+    aeropuerto: "",
     nombre: "",
+    descripcion: "",
     direccion: "",
     fecha: new Date().toISOString().slice(0, 16), // formato YYYY-MM-DDTHH:mm
+    estado_id: "1", // 1: Resuelto, 2: En proceso
   });
 
+  // Opciones de aeropuerto (puedes agregar más si lo necesitas)
+  const aeropuertos = [
+    { id: "GUA", nombre: "Guatemala" },
+    // { id: "XXX", nombre: "Otro Aeropuerto" }, // Agrega más si es necesario
+  ];
+
   useEffect(() => {
-    // Obtener tipos de incidente
-    fetch(`${apiBase}/tipos-incidente`)
+    fetch(apiBase)
       .then((res) => res.json())
-      .then((data) => setTiposIncidente(data))
-      .catch(() => setTiposIncidente([]));
-    // Obtener tipos de accidente
-    fetch(`${apiBase}/tipos-accidente`)
-      .then((res) => res.json())
-      .then((data) => setTiposAccidente(data))
-      .catch(() => setTiposAccidente([]));
+      .then((data) => {
+        // data es un array de arrays: [id, nombre, descripcion]
+        if (data && Array.isArray(data)) {
+          const tipos = data.map(([id, nombre, descripcion]) => ({
+            id,
+            nombre,
+            descripcion,
+          }));
+          setTiposIncidente(tipos);
+        } else {
+          setTiposIncidente([]);
+          console.error(
+            "La respuesta de la API no es un array de arrays:",
+            data
+          );
+        }
+      })
+      .catch((err) => {
+        console.error("Error al obtener tipos de incidente:", err);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -67,11 +88,14 @@ const CreateRegin = () => {
           required
         >
           <option value="">Seleccione...</option>
-          {tiposAccidente.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.nombre}
-            </option>
-          ))}
+          <option value="GUA">Aeropuerto Aurora</option>
+          {aeropuertos
+            .filter((a) => a.id !== "GUA")
+            .map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.nombre}
+              </option>
+            ))}
         </select>
 
         <label style={styles.label}>Ingresar Nombre</label>
@@ -87,18 +111,8 @@ const CreateRegin = () => {
         <label style={styles.label}>Ingresar Descripcion</label>
         <input
           type="text"
-          name="nombre"
+          name="descripcion"
           value={form.descripcion}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
-
-        <label style={styles.label}>Ingresar Dirección</label>
-        <input
-          type="text"
-          name="direccion"
-          value={form.direccion}
           onChange={handleChange}
           style={styles.input}
           required
@@ -112,7 +126,6 @@ const CreateRegin = () => {
           onChange={handleChange}
           style={styles.input}
           required
-          readOnly
         />
 
         <button type="submit" style={styles.button}>
