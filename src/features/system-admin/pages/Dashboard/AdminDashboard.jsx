@@ -4,22 +4,22 @@ const AdminDashboard = () => {
     return (
         <nav>
             <ul>
-                <li>
+                <li key="aeropuertos">
                     <Link to="/system-admin/Aeropuertos">Aeropuertos</Link>
                 </li>
-                <li>
+                <li key="aerolineas">
                     <Link to="/system-admin/Aerolineas">Aerolíneas</Link>
                 </li>
-                <li>
+                <li key="contratos">
                     <Link to="/system-admin/Contratos">Contratos</Link>
                 </li>
-                <li>
+                <li key="modelos-avion">
                     <Link to="/system-admin/ModelosAvion">Modelos de Avión</Link>
                 </li>
-                <li>
+                <li key="pistas">
                     <Link to="/system-admin/Pistas">Pistas</Link>
                 </li>
-                <li>
+                <li key="usuarios">
                     <Link to="/system-admin/Usuarios">Usuarios</Link>
                 </li>
             </ul>
@@ -28,4 +28,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

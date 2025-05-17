@@ -1,245 +1,181 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useFlightPlans } from "../../../hooks/useFlightPlans";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import styles from "./CreateFlightPlan.module.css";
 
 const CreateFlightPlan = () => {
-  const navigate = useNavigate();
-  const { createFlightPlan } = useFlightPlans();
+  const [flightData, setFlightData] = useState([]);
+  const [tipoNave, setTipoNave] = useState([]);
+  const [tipoVuelo, setTipoVuelo] = useState([]);
+  const [dga, setDga] = useState([]);
+  const [form, setForm] = useState({
+    flightNumber: "",
+    destination: "",
+    date: "",
+    time: "",
+    observation: "",
+  });
 
-  const [codigoIATA, setCodigoIATA] = useState("");
-  const [origen, setOrigen] = useState("");
-  const [tipoAvion, setTipoAvion] = useState("");
-  const [avion, setAvion] = useState("");
-  const [escala, setEscala] = useState("");
-  const [escalas, setEscalas] = useState([]);
-  const [piloto, setPiloto] = useState("");
-  const [fechaSalida, setFechaSalida] = useState("");
-  const [fechaLlegada, setFechaLlegada] = useState("");
-  const [aerolinea, setAerolinea] = useState("");
-  const [pista, setPista] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/datos-vuelo");
+        console.log("Respuesta del backend:", response.data);
+        setFlightData(response.data.vuelos || []);
+        setTipoNave(response.data.tipoNave || []);
+        setTipoVuelo(response.data.tipoVuelo || []);
+        setDga(response.data.dga || []);
+      } catch (error) {
+        console.error("Error fetching flight data:", error);
+      }
+    };
 
-  const tiposAvion = ["Comercial", "Privado", "Carga"];
-  const estadosContrato = ["Autorizado", "Pendiente"];
-  const avionesPorTipo = {
-    Comercial: ["Boeing 747", "Airbus A320"],
-    Privado: ["Cessna Citation", "Gulfstream G650"],
-    Carga: ["Antonov An-225", "Boeing 767 Freighter"],
-  };
-  const pilotosDisponibles = [
-    { nombre: "Juan Pérez", licencia: "Comercial" },
-    { nombre: "Ana Gómez", licencia: "Privado" },
-    { nombre: "Carlos Rodríguez", licencia: "Carga" },
-  ];
+    fetchData();
+  }, []);
 
-  const handleAddEscala = () => {
-    if (escalas.length < 3) {
-      setEscalas([...escalas, { aeropuertos: [""] }]);
-    } else {
-      alert("Solo se permiten hasta 3 escalas.");
-    }
-  };
-
-  const handleAddAeropuerto = (index) => {
-    const newEscalas = [...escalas];
-    if (newEscalas[index].aeropuertos.length < 3) {
-      newEscalas[index].aeropuertos.push("");
-      setEscalas(newEscalas);
-    } else {
-      alert("Solo se permiten hasta 3 aeropuertos por escala.");
-    }
-  };
-
-  const handleChangeAeropuerto = (escalaIndex, aeropuertoIndex, value) => {
-    const newEscalas = [...escalas];
-    newEscalas[escalaIndex].aeropuertos[aeropuertoIndex] = value;
-    setEscalas(newEscalas);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      !codigoIATA ||
-      !origen ||
-      !tipoAvion ||
-      !avion ||
-      !piloto ||
-      !fechaSalida ||
-      !fechaLlegada
-    ) {
-      alert("Por favor, complete todos los campos antes de enviar.");
-      return;
-    }
-
-    const formData = {
-      codigoIATA,
-      origen,
-      tipoAvion,
-      avion,
-      escalas,
-      piloto,
-      añadirDestido,
-      fechaSalida,
-      fechaLlegada,
-    };
-
-    const id = createFlightPlan(formData);
-    navigate(`/flight-operator/flight-plans/edit/${id}`);
+    console.log("Datos del formulario:", form);
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <h1>Crear Nuevo Plan de Vuelo</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label className={styles.label}>Código IATA:</label>
-        <input
-          type="text"
-          value={codigoIATA}
-          onChange={(e) => setCodigoIATA(e.target.value)}
-          placeholder="Ej. MIA, LAX"
-          className={styles.input}
-        />
-
-        <label className={styles.label}>Tarifa:</label>
-        <input type="number" placeholder="Ej. 500" className={styles.input} />
-
-        <label className={styles.label}>Origen:</label>
-        <input
-          type="text"
-          value={origen}
-          onChange={(e) => setOrigen(e.target.value)}
-          placeholder="Ciudad de origen"
-          className={styles.input}
-        />
-
-        <label className={styles.label}>Añadir Avión:</label>
-        <select
-          value={tipoAvion}
-          onChange={(e) => setTipoAvion(e.target.value)}
-          className={styles.select}
-        >
-          <option value="">Seleccionar Tipo de Avión</option>
-          {tiposAvion.map((tipo) => (
-            <option key={tipo} value={tipo}>
-              {tipo}
-            </option>
-          ))}
-        </select>
-
-        {tipoAvion && (
-          <>
-            <label className={styles.label}>Avión:</label>
-            <select
-              value={avion}
-              onChange={(e) => setAvion(e.target.value)}
-              className={styles.select}
-            >
-              <option value="">Seleccionar</option>
-              {avionesPorTipo[tipoAvion].map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-          </>
-        )}
-
-        <label className={styles.label}>¿Añadir Escala?</label>
-        <select
-          value={escala}
-          onChange={(e) => setEscala(e.target.value)}
-          className={styles.select}
-        >
-          <option value="">Seleccionar</option>
-          <option value="Si">Sí</option>
-          <option value="No">No</option>
-        </select>
-
-        {escala === "Si" && (
-          <>
-            <button
-              type="button"
-              onClick={handleAddEscala}
-              className={styles.button}
-            >
-              Añadir Escala
-            </button>
-            {escalas.map((escala, escalaIndex) => (
-              <div key={escalaIndex} className={styles.escala}>
-                <h4>Escala {escalaIndex + 1}</h4>
-                {escala.aeropuertos.map((aeropuerto, aeropuertoIndex) => (
-                  <div key={aeropuertoIndex}>
-                    <label className={styles.label}>
-                      Aeropuerto {aeropuertoIndex + 1}:
-                    </label>
-                    <input
-                      type="text"
-                      value={aeropuerto}
-                      onChange={(e) =>
-                        handleChangeAeropuerto(
-                          escalaIndex,
-                          aeropuertoIndex,
-                          e.target.value
-                        )
-                      }
-                      placeholder="Nombre del aeropuerto"
-                      className={styles.input}
-                    />
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => handleAddAeropuerto(escalaIndex)}
-                  className={styles.button}
-                >
-                  Añadir Aeropuerto
-                </button>
-              </div>
-            ))}
-          </>
-        )}
-
-        <label className={styles.label}>Piloto:</label>
-        <select
-          value={piloto}
-          onChange={(e) => setPiloto(e.target.value)}
-          className={styles.select}
-        >
-          <option value="">Seleccionar</option>
-          {pilotosDisponibles.map((p) => (
-            <option key={p.nombre} value={p.nombre}>
-              {p.nombre} - {p.licencia}
-            </option>
-          ))}
-        </select>
-
-        <label className={styles.label}>Destino:</label>
-        <input
-          type="text"
-          placeholder="Ciudad de destino"
-          className={styles.input}
-        />
-
-        <label className={styles.label}>Fecha de Salida:</label>
-        <input
-          type="datetime-local"
-          value={fechaSalida}
-          onChange={(e) => setFechaSalida(e.target.value)}
-          className={styles.input}
-        />
-
-        <label className={styles.label}>Fecha de Llegada:</label>
-        <input
-          type="datetime-local"
-          value={fechaLlegada}
-          onChange={(e) => setFechaLlegada(e.target.value)}
-          className={styles.input}
-        />
-
-        <button type="submit" className={styles.button}>
-          Crear
-        </button>
+    <div className={styles.div}>
+      <h1 className={styles.h1}>Crear Plan de Vuelo</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Número de vuelo:</label>
+          <input
+            type="text"
+            name="flightNumber"
+            value={form.flightNumber}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Destino:</label>
+          <input
+            type="text"
+            name="destination"
+            value={form.destination}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Fecha:</label>
+          <input
+            type="date"
+            name="date"
+            value={form.date}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Hora:</label>
+          <input
+            type="time"
+            name="time"
+            value={form.time}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Observación:</label>
+          <input
+            type="text"
+            name="observation"
+            value={form.observation}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit">Crear Plan</button>
       </form>
+
+      {/* Tabla de vuelos */}
+      <h1 className={styles.h1}>Flight Data</h1>
+      <table className={styles.table} border="1">
+        <thead className={styles.thead}>
+          <tr>
+            <th>Aeropuerto ID</th>
+            <th>Nombre Aeropuerto</th>
+            <th>Ciudad</th>
+            <th>País</th>
+          </tr>
+        </thead>
+        <tbody>
+          {flightData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.AER_AEROPUERTO_ID}</td>
+              <td>{item.AER_NOMBRE_AEROPUERTO}</td>
+              <td>{item.CIU_NOMBRE_CIUDAD}</td>
+              <td>{item.PAI_NOMBRE_PAIS}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Tabla de tipoNave */}
+      <h2 className={styles.h1}>Tipo de Nave</h2>
+      <table className={styles.table} border="1">
+        <thead>
+          <tr>
+            <th>Nombre Tipo</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tipoNave.map((item, idx) => (
+            <tr key={`tipoNave-${idx}`}>
+              <td>{item.TIN_NOMBRE_TIPO}</td>
+              <td>{item.TIN_DESCRIPCION}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Tabla de tipoVuelo */}
+      <h2 className={styles.h1}>Tipo de Vuelo</h2>
+      <table className={styles.table} border="1">
+        <thead>
+          <tr>
+            <th>Nombre Tipo Vuelo</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tipoVuelo.map((item, idx) => (
+            <tr key={`tipoVuelo-${idx}`}>
+              <td>{item.TIV_NOMBRE_TIPO_VUELO}</td>
+              <td>{item.TIV_DESCRIPCION}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Tabla de dga */}
+      <h2 className={styles.h1}>DGA</h2>
+      <table className={styles.table} border="1">
+        <thead>
+          <tr>
+            <th>Fecha Respuesta</th>
+            <th>Observación</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dga.map((item, idx) => (
+            <tr key={`dga-${idx}`}>
+              <td>{item.DGA_FECHA_RESPUESTA}</td>
+              <td>{item.DGA_OBSERVACION}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

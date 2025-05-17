@@ -25,6 +25,36 @@ export const AuthProvider = ({ children }) => {
         role: "system_admin",
         name: "Administrador",
       };
+    } else if (username === "DGAC" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "DGAC",
+        name: "DGAC",
+      };
+    } else if (username === "segAero" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "segAero",
+        name: "SegAero",
+      };
+    } else if (username === "usuReports" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "usuReports",
+        name: "usureports",
+      };
+    } else if (username === "controlvuelo" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "controlVuelo",
+        name: "Control de Vuelo",
+      };
+    } else if (username === "check" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "check",
+        name: "Check",
+      };
     }
 
     if (authenticatedUser) {
@@ -36,6 +66,16 @@ export const AuthProvider = ({ children }) => {
         navigate("/flight-operator/dashboard");
       } else if (authenticatedUser.role === "system_admin") {
         navigate("/system-admin/dashboard");
+      } else if (authenticatedUser.role === "DGAC") {
+        navigate("/DGAC/dashboard");
+      } else if (authenticatedUser.role === "segAero") {
+        navigate("/segAero/dashboard");
+      } else if (authenticatedUser.role === "usuReports") {
+        navigate("/usuReports/dashboard");
+      } else if (authenticatedUser.role === "controlVuelo") {
+        navigate("/controlvuelo/dashboard");
+      } else if (authenticatedUser.role === "check") {
+        navigate("/check/dashboard");
       }
 
       return true;

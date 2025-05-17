@@ -58,13 +58,17 @@ const CreateRegin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formatFecha = (fecha) => {
+      return fecha.split("T")[0]; // Retorna solo la parte de la fecha en formato YYYY-MM-DD
+    };
+
     const body = {
       nombre_incidente: form.nombre_incidente,
       tipo_incidente_id: Number(form.tipoIncidente),
       aeropuerto_id: form.aeropuerto ? Number(form.aeropuerto) : 21513,
       nombre_persona: form.nombre,
       descripcion: form.descripcion,
-      fecha_incidente: form.fecha.replace("T", " "), // Ajustar formato de fecha
+      fecha_incidente: formatFecha(form.fecha), // Formatear la fecha
       estado_id: Number(form.estado_id),
     };
 

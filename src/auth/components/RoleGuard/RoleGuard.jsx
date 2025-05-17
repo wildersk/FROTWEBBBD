@@ -5,6 +5,7 @@ import LoadingSpinner from "../../../shared/components/LoadingSpinner";
 
 const RoleGuard = ({ allowedRoles }) => {
   const { user, loading } = useContext(AuthContext);
+  console.log("Role actual:", user?.role);
 
   if (loading) {
     return <LoadingSpinner />;

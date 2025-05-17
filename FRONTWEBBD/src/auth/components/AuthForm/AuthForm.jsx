@@ -48,18 +48,18 @@ export const AuthProvider = ({ children }) => {
       return true;
     }
 
-    if (username === "dgac" && password === "123") {
+    if (username === "DGAC" && password === "123") {
       const userData = {
         name: "DGAC",
-        role: "dgac",
+        role: "DGAC",
       };
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
-      navigate("/dgac/dashboard");
+      navigate("/DGAC/dashboard");
       return true;
     }
 
-    if (username === "segaero" && password === "123") {
+    if (username === "segAero" && password === "123") {
       const userData = {
         name: "SEGAERO",
         role: "segAero",

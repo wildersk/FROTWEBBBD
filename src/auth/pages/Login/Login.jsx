@@ -41,7 +41,7 @@ const Login = () => {
               className={styles.input}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="operador o admin"
+              placeholder="operador, admin o dgac"
               required
             />
           </div>
@@ -76,6 +76,10 @@ const Login = () => {
           </p>
           <p>
             Admin: usuario <strong>admin</strong> | contraseña{" "}
+            <strong>123</strong>
+          </p>
+          <p>
+            DGAC: usuario <strong>dgac</strong> | contraseña{" "}
             <strong>123</strong>
           </p>
         </div>
