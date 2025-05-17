@@ -1,30 +1,24 @@
 import { Link } from 'react-router-dom';
 
-const AdminDashboard = () => {
-    return (
-        <nav>
-            <ul>
-                <li key="aeropuertos">
-                    <Link to="/system-admin/Aeropuertos">Aeropuertos</Link>
+const links = [
+    { to: "/system-admin/Aeropuertos", label: "Aeropuertos" },
+    { to: "/system-admin/Aerolineas", label: "Aerolíneas" },
+    { to: "/system-admin/Contratos", label: "Contratos" },
+    { to: "/system-admin/ModelosAvion", label: "Modelos de Avión" },
+    { to: "/system-admin/Pistas", label: "Pistas" },
+    { to: "/system-admin/Usuarios", label: "Usuarios" },
+];
+
+const AdminDashboard = () => (
+    <nav>
+        <ul>
+            {links.map(link => (
+                <li key={link.to}>
+                    <Link to={link.to}>{link.label}</Link>
                 </li>
-                <li key="aerolineas">
-                    <Link to="/system-admin/Aerolineas">Aerolíneas</Link>
-                </li>
-                <li key="contratos">
-                    <Link to="/system-admin/Contratos">Contratos</Link>
-                </li>
-                <li key="modelos-avion">
-                    <Link to="/system-admin/ModelosAvion">Modelos de Avión</Link>
-                </li>
-                <li key="pistas">
-                    <Link to="/system-admin/Pistas">Pistas</Link>
-                </li>
-                <li key="usuarios">
-                    <Link to="/system-admin/Usuarios">Usuarios</Link>
-                </li>
-            </ul>
-        </nav>
-    );
-};
+            ))}
+        </ul>
+    </nav>
+);
 
 export default AdminDashboard;
