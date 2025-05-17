@@ -1,48 +1,31 @@
-import { useState } from 'react';
+useEffect(() => {
+  fetch('http://localhost:3000/aeropuertos')
+    .then(res => res.json())
+    .then(data => setAeropuertos(data));
+}, []);
 
-export default function Aeropuertos() {
-    const [aeropuertos, setAeropuertos] = useState([]);
-    const [formData, setFormData] = useState({
-        codigo: '',
-        nombre: '',
-        ciudad: '',
-        pais: '',
-    });
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
+  const body = {
+    codigo: formData.codigo,
+    nombre: formData.nombre,
+    ciudadId: 1 // ciudad por defecto para prueba
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const isDuplicate = aeropuertos.some(aeropuerto => aeropuerto.codigo === formData.codigo);
-        if (isDuplicate) {
-            alert('El código OACI ya está registrado.');
-            return;
-        }
-        setAeropuertos([...aeropuertos, formData]);
-        setFormData({ codigo: '', nombre: '', ciudad: '', pais: '' });
-    };
+  const res = await fetch('http://localhost:3000/aeropuertos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
 
-    return (
-        <div className="p-4">
-            <h1 className="text-xl font-bold mb-4">Gestión de Aeropuertos</h1>
-
-            <form onSubmit={handleSubmit} className="mb-6 space-y-2">
-                <input name="codigo" value={formData.codigo} onChange={handleChange} placeholder="Código OACI" className="border p-2 w-full" required />
-                <input name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" className="border p-2 w-full" required />
-                <input name="ciudad" value={formData.ciudad} onChange={handleChange} placeholder="Ciudad" className="border p-2 w-full" required />
-                <input name="pais" value={formData.pais} onChange={handleChange} placeholder="País" className="border p-2 w-full" required />
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2">Registrar</button>
-            </form>
-
-            <h2 className="text-lg font-semibold">Aeropuertos Registrados</h2>
-            <ul className="mt-2 list-disc pl-5">
-                {aeropuertos.map((aeropuerto, index) => (
-                    <li key={index}>{aeropuerto.codigo} - {aeropuerto.nombre} ({aeropuerto.ciudad}, {aeropuerto.pais})</li>
-                ))}
-            </ul>
-        </div>
-    );
-}
+  if (res.ok) {
+    alert('Aeropuerto registrado');
+    setFormData({ codigo: '', nombre: '', ciudad: '', pais: '' });
+    // recargar
+    const lista = await fetch('http://localhost:3000/aeropuertos').then(r => r.json());
+    setAeropuertos(lista);
+  } else {
+    alert('Error al registrar aeropuerto');
+  }
+};
