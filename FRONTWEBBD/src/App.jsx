@@ -59,6 +59,10 @@ const CreateRegin = lazy(() =>
   import("./features/segAero/pages/regincident/Create")
 );
 
+const CreateListarincidente = lazy(() =>
+  import("./features/segAero/pages/Dashboard/listarIncidente")
+);
+
 // paginas de usureports (ejemplo)
 const UsuReportsDashboard = lazy(() =>
   import("./features/usuReports/pages/Dashboard/Dashboard")
