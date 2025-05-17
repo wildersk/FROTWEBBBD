@@ -55,6 +55,12 @@ export const AuthProvider = ({ children }) => {
         role: "check",
         name: "Check",
       };
+    } else if (username === "pasajero" && password === "123") {
+      authenticatedUser = {
+        username,
+        role: "pasajero",
+        name: "Pasajero",
+      };
     }
 
     if (authenticatedUser) {
@@ -76,6 +82,8 @@ export const AuthProvider = ({ children }) => {
         navigate("/controlvuelo/dashboard");
       } else if (authenticatedUser.role === "check") {
         navigate("/check/dashboard");
+      } else if (authenticatedUser.role === "pasajero") {
+        navigate("/appUsu/dashboard/dashboardappUsu");
       }
 
       return true;

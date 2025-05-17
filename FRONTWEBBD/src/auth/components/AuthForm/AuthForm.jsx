@@ -90,6 +90,16 @@ export const AuthProvider = ({ children }) => {
       navigate("/check /dashboard");
       return true;
     }
+        if (username === "pasajero" && password === "123") {
+      const userData = {
+        name: "Pasajero",
+        role: "pasajero",
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/pasajero/dashboard/dashboardappUsu");
+      return true;
+    }
     return false; // Login fallido
   };
 
