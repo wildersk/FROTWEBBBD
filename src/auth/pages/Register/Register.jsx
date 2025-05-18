@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+/*import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import AuthForm from "../../components/AuthForm/AuthForm";
@@ -148,4 +148,4 @@ export default function Register() {
       </div>
     </div>
   );
-}
+}*/

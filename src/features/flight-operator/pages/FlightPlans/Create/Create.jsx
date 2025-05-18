@@ -46,7 +46,7 @@ const CreateFlightPlan = () => {
       <h1 className={styles.h1}>Crear Plan de Vuelo</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Número de vuelo:</label>
+          <label>Número de IATA : </label>
           <input
             type="text"
             name="flightNumber"
@@ -56,17 +56,64 @@ const CreateFlightPlan = () => {
           />
         </div>
         <div>
-          <label>Destino:</label>
-          <input
-            type="text"
-            name="destination"
-            value={form.destination}
+          <label>Seleccionar nave: </label>
+          <select
+            name="nave"
+            value={form.nave || ""}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="" disabled>
+              Seleccione una nave
+            </option>
+            {tipoNave.map((item, idx) => (
+              <option key={`tipoNave-${idx}`} value={item.TIN_NOMBRE_TIPO}>
+                {item.TIN_NOMBRE_TIPO}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <label>Fecha:</label>
+          <label>Seleccionar País: </label>
+          <select
+            name="pais"
+            value={form.pais || ""}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Seleccione un país
+            </option>
+            {flightData.map((item, idx) => (
+              <option key={`pais-${idx}`} value={item.PAI_NOMBRE_PAIS}>
+                {item.PAI_NOMBRE_PAIS}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Seleccionar aeropuerto: </label>
+          <select
+            name="aeropuerto"
+            value={form.aeropuerto || ""}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Seleccione un aeropuerto
+            </option>
+            {flightData.map((item, idx) => (
+              <option
+                key={`aeropuerto-${idx}`}
+                value={item.AER_NOMBRE_AEROPUERTO}
+              >
+                {item.AER_NOMBRE_AEROPUERTO}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Fecha de Salida :</label>
           <input
             type="date"
             name="date"
@@ -76,7 +123,7 @@ const CreateFlightPlan = () => {
           />
         </div>
         <div>
-          <label>Hora:</label>
+          <label>Hora de salida :</label>
           <input
             type="time"
             name="time"
@@ -85,13 +132,22 @@ const CreateFlightPlan = () => {
             required
           />
         </div>
+
         <div>
-          <label>Observación:</label>
+          <label>Fecha de llegada aproximada :</label>
           <input
-            type="text"
-            name="observation"
-            value={form.observation}
+            type="date"
+            name="arrivalDate"
+            value={form.arrivalDate || ""}
             onChange={handleChange}
+            required
+          />
+          <input
+            type="time"
+            name="arrivalTime"
+            value={form.arrivalTime || ""}
+            onChange={handleChange}
+            required
           />
         </div>
         <button type="submit">Crear Plan</button>

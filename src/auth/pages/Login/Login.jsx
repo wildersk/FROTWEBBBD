@@ -41,7 +41,6 @@ const Login = () => {
               className={styles.input}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="operador, admin o dgac"
               required
             />
           </div>
@@ -56,7 +55,6 @@ const Login = () => {
               className={styles.input}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="123"
               required
             />
           </div>
@@ -65,24 +63,6 @@ const Login = () => {
             Ingresar
           </button>
         </form>
-
-        <div className={styles.demoCredentials}>
-          <p>
-            <strong>Usuario de prueba:</strong>
-          </p>
-          <p>
-            Operador: usuario <strong>operador</strong> | contraseña{" "}
-            <strong>123</strong>
-          </p>
-          <p>
-            Admin: usuario <strong>admin</strong> | contraseña{" "}
-            <strong>123</strong>
-          </p>
-          <p>
-            DGAC: usuario <strong>dgac</strong> | contraseña{" "}
-            <strong>123</strong>
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -74,6 +74,10 @@ const ControlVueloDashboard = lazy(() =>
 const CheckDashboard = lazy(() =>
   import("./features/checking/pages/Dashboard/Dashboard")
 );
+// Páginas de usuario (ejemplo)
+const UserDashboard = lazy(() =>
+  import("./features/usuario/pages/Dashboard/Dashboard")
+);
 
 function App() {
   return (
@@ -164,6 +168,12 @@ function App() {
               <Route path="/check/dashboard" element={<CheckDashboard />} />
               {/* Agrega aquí más rutas si tienes más páginas para este rol */}
             </Route>
+            {/* Rutas protegidas para usuario */}
+            <Route element={<RoleGuard allowedRoles={["user"]} />}>
+              <Route path="/user/dashboard" element={<UserDashboard />} />
+              {/* Agrega aquí más rutas si tienes más páginas para este rol */}
+            </Route>
+            {/* Rutas protegidas para todos los demás roles */}
 
             {/* Redirecciones */}
             <Route path="/" element={<Navigate to="/login" replace />} />

@@ -90,6 +90,27 @@ export const AuthProvider = ({ children }) => {
       navigate("/check /dashboard");
       return true;
     }
+    if (username === "usuReports" && password === "123") {
+      const userData = {
+        name: "usuReports",
+        role: "usuReports",
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/usuReports/dashboard");
+      return true;
+    }
+    if (username === "user" && password === "123") {
+      const userData = {
+        name: "Usuario",
+        role: "user",
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/user/dashboard");
+      return true;
+    }
+
     return false; // Login fallido
   };
 
