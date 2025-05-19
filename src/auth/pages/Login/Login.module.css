@@ -1,31 +1,43 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
 .container {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
-  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
-  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Fondo atractivo */
-  padding: 20px; /* Espaciado para evitar cortes en pantallas pequeñas */
-  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* Caja del formulario */
 .formWrapper {
-  background: #fff;
-  padding: 40px 100px;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 800px;
-  min-width: 600px;
+  max-width: 520px;
   text-align: center;
+  box-sizing: border-box;
 }
-
 
 /* Título */
 .title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2c3e50;
   margin-bottom: 20px;
 }
 
@@ -37,77 +49,141 @@
 
 /* Etiqueta */
 .label {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 5px;
+  font-size: 15px;
+  color: #34495e;
+  margin-bottom: 8px;
   display: block;
+  font-weight: 500;
 }
 
 /* Campo de entrada */
 .input {
   width: 100%;
-  padding: 10px 15px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 1px solid #dcdde1;
+  border-radius: 8px;
   outline: none;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
 }
 
 .input:focus {
-  border-color: #6a11cb;
+  border-color: #4e54c8;
+  box-shadow: 0 0 5px rgba(78, 84, 200, 0.3);
 }
 
 /* Botón */
 .button {
   width: 100%;
-  padding: 10px 15px;
-  font-size: 16px;
+  padding: 14px 16px;
+  font-size: 17px;
   font-weight: 600;
-  color: #fff;
-  background: #6a11cb;
+  color: #ffffff;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .button:hover {
-  background: #2575fc;
+  background: linear-gradient(135deg, #3b3dbf, #7a81f5);
+  transform: translateY(-2px);
 }
 
 /* Enlace */
 .link {
   display: block;
-  margin-top: 15px;
+  margin-top: 20px;
   font-size: 14px;
-  color: #6a11cb;
+  color: #4e54c8;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }
 
 .link:hover {
-  color: #2575fc;
+  color: #3b3dbf;
 }
 
-/* Media query para pantallas pequeñas */
-@media (min-width: 480px) {
+/* Responsive */
+@media (max-width: 768px) {
   .formWrapper {
-    max-width: 20px; /* Aumenta el ancho máximo en pantallas grandes */
-    padding: 100px 40px;
-     /* Aumenta el padding */
+    padding: 20px 15px;
   }
+
   .title {
-    font-size: 28px; /* Aumenta el tamaño del título */
+    font-size: 22px;
   }
 
   .input {
-    font-size: 16px; /* Reduce el tamaño de las entradas */
-    padding: 12px 15px; /* Ajusta el padding */
+    font-size: 14px;
+    padding: 12px;
   }
 
   .button {
-    font-size: 18px; /* Reduce el tamaño del texto del botón */
-    padding: 12px 15px; /* Ajusta el padding */
+    font-size: 15px;
+    padding: 12px;
   }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Media query para resoluciones de 720p hacia arriba */
+@media (min-width: 1280px) {
+  .formWrapper {
+    padding: 60px 40px;
+    max-width: 640px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .input {
+    font-size: 17px;
+  }
+
+  .button {
+    font-size: 18px;
+  }
+}
+
+/* Registro */
+.registerPrompt {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #34495e;
+  text-align: center;
+}
+
+.registerButton {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 5px;
+}
+
+.registerButton:hover {
+  background: linear-gradient(135deg, #3b3dbf, #7a81f5);
+  transform: translateY(-2px);
 }

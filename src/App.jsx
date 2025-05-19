@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./auth/context/AuthContext";
-import RoleGuard from "./auth/components/RoleGuard/RoleGuard";
 import LoadingSpinner from "./shared/components/LoadingSpinner";
 
 // Componentes lazy-loaded
@@ -79,6 +78,10 @@ const UserDashboard = lazy(() =>
   import("./features/usuario/pages/Dashboard/Dashboard")
 );
 
+const VuelosProgramados = lazy(() =>
+  import("./features/usuario/pages/consultVuelos/vuelosProgramados")
+);
+
 function App() {
   return (
     <Router>
@@ -90,90 +93,71 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             {/* Rutas protegidas para operador de vuelos */}
-            <Route element={<RoleGuard allowedRoles={["flight_operator"]} />}>
-              <Route
-                path="/flight-operator/dashboard"
-                element={<Dashboard />}
-              />
-              <Route
-                path="/flight-operator/flight-plans/create"
-                element={<CreateFlightPlan />}
-              />
-              <Route
-                path="/flight-operator/flight-plans/edit/:id"
-                element={<EditFlightPlan />}
-              />
-              <Route
-                path="/flight-operator/flight-plans/delete/:id"
-                element={<DeleteFlightPlan />}
-              />
-            </Route>
+            <Route path="/flight-operator/dashboard" element={<Dashboard />} />
+            <Route
+              path="/flight-operator/flight-plans/create"
+              element={<CreateFlightPlan />}
+            />
+            <Route
+              path="/flight-operator/flight-plans/edit/:id"
+              element={<EditFlightPlan />}
+            />
+            <Route
+              path="/flight-operator/flight-plans/delete/:id"
+              element={<DeleteFlightPlan />}
+            />
+
             {/* Rutas protegidas para administrador */}
-            <Route element={<RoleGuard allowedRoles={["system_admin"]} />}>
-              <Route
-                path="/system-admin/dashboard"
-                element={<AdminDashboard />}
-              />
-              <Route
-                path="/system-admin/Aeropuertos"
-                element={<Aeropuertos />}
-              />
-              <Route path="/system-admin/Aerolineas" element={<Aerolineas />} />
-              <Route
-                path="/system-admin/ModelosAvion"
-                element={<ModelosAvion />}
-              />
-              <Route path="/system-admin/Pistas" element={<Pistas />} />
-              <Route path="/system-admin/Usuarios" element={<Usuarios />} />
-              <Route path="/system-admin/Contratos" element={<Contratos />} />
-            </Route>
+            <Route
+              path="/system-admin/dashboard"
+              element={<AdminDashboard />}
+            />
+            <Route path="/system-admin/Aeropuertos" element={<Aeropuertos />} />
+            <Route path="/system-admin/Aerolineas" element={<Aerolineas />} />
+            <Route
+              path="/system-admin/ModelosAvion"
+              element={<ModelosAvion />}
+            />
+            <Route path="/system-admin/Pistas" element={<Pistas />} />
+            <Route path="/system-admin/Usuarios" element={<Usuarios />} />
+            <Route path="/system-admin/Contratos" element={<Contratos />} />
+
             {/* Rutas protegidas para DGAC */}
-            <Route element={<RoleGuard allowedRoles={["DGAC"]} />}>
-              <Route path="/dgac/dashboard" element={<DgacDashboard />} />
-            </Route>
+            <Route path="/dgac/dashboard" element={<DgacDashboard />} />
 
             {/* Rutas protegidas para segAero */}
-            <Route element={<RoleGuard allowedRoles={["segAero"]} />}>
-              <Route path="/segaero/dashboard" element={<SegAeroDashboard />} />
-              <Route
-                path="/segaero/regincident/create"
-                element={<CreateRegin />}
-              />
-              <Route element={<RoleGuard allowedRoles={["segAero"]} />}>
-                <Route
-                  path="/segaero/Dashboard/listarIncidente"
-                  element={<CreateListarincidente />}
-                />
-              </Route>
-            </Route>
+
+            <Route path="/segaero/dashboard" element={<SegAeroDashboard />} />
+            <Route
+              path="/segaero/regincident/create"
+              element={<CreateRegin />}
+            />
+            <Route
+              path="/segaero/Dashboard/listarIncidente"
+              element={<CreateListarincidente />}
+            />
 
             {/* Rutas protegidas para usureports*/}
-            <Route element={<RoleGuard allowedRoles={["usuReports"]} />}>
-              <Route
-                path="/usureports/dashboard"
-                element={<UsuReportsDashboard />}
-              />
-            </Route>
 
-            <Route element={<RoleGuard allowedRoles={["controlVuelo"]} />}>
-              <Route
-                path="/controlvuelo/dashboard"
-                element={<ControlVueloDashboard />}
-              />
-              {/* Agrega aquí más rutas si tienes más páginas para este rol */}
-            </Route>
+            <Route
+              path="/usureports/dashboard"
+              element={<UsuReportsDashboard />}
+            />
+
+            <Route
+              path="/controlvuelo/dashboard"
+              element={<ControlVueloDashboard />}
+            />
+            {/* Agrega aquí más rutas si tienes más páginas para este rol */}
+
             {/* Rutas protegidas para check */}
 
-            <Route element={<RoleGuard allowedRoles={["check"]} />}>
-              <Route path="/check/dashboard" element={<CheckDashboard />} />
-              {/* Agrega aquí más rutas si tienes más páginas para este rol */}
-            </Route>
+            <Route path="/check/dashboard" element={<CheckDashboard />} />
+            {/* Agrega aquí más rutas si tienes más páginas para este rol */}
+
             {/* Rutas protegidas para usuario */}
-            <Route element={<RoleGuard allowedRoles={["user"]} />}>
-              <Route path="/user/dashboard" element={<UserDashboard />} />
-              {/* Agrega aquí más rutas si tienes más páginas para este rol */}
-            </Route>
-            {/* Rutas protegidas para todos los demás roles */}
+            <Route path="/user/dashboard" element={<UserDashboard />} />
+            <Route path="/vuelosProgramados/" element={<VuelosProgramados />} />
 
             {/* Redirecciones */}
             <Route path="/" element={<Navigate to="/login" replace />} />

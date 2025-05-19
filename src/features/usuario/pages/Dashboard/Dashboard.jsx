@@ -6,7 +6,7 @@ const Dashboard = () => {
       <nav style={styles.nav}>
         <ul style={styles.menu}>
           <li style={styles.menuItem}>
-            <a href="#vuelos" style={styles.link}>
+            <a href="/VuelosProgramados" style={styles.link}>
               Vuelos Programados
             </a>
           </li>

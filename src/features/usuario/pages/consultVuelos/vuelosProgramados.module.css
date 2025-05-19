@@ -1,0 +1,83 @@
+/* vuelosProgramados.module.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.container {
+    padding: 20px;
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
+}
+
+.nav {
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.menuItem {
+    margin: 0;
+}
+
+.link {
+    text-decoration: none;
+    color: #000000; /* Changed to black */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: #ffdd57;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #2f0707;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #000000; /* Changed to black */
+}
+
+th {
+    background-color: #007bff;
+    color: #000000; /* Changed to black */
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #d9ded9;
+}
+    
+tr:hover {
+    background-color: #149d4f;
+}
