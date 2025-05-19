@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./CreateFlightPlan.module.css";
-
+//-------------------------------------------------------------
+// +++++++++punto de guardado+++++++++++++
 const CreateFlightPlan = () => {
   const [flightData, setFlightData] = useState([]);
   const [tipoNave, setTipoNave] = useState([]);
@@ -40,6 +41,14 @@ const CreateFlightPlan = () => {
     e.preventDefault();
     console.log("Datos del formulario:", form);
   };
+
+  const uniquePaises = Array.from(
+    new Set(flightData.map((item) => item.PAI_NOMBRE_PAIS))
+  );
+
+  const aeropuertosFiltrados = form.pais
+    ? flightData.filter((item) => item.PAI_NOMBRE_PAIS === form.pais)
+    : [];
 
   return (
     <div className={styles.div}>
@@ -84,9 +93,9 @@ const CreateFlightPlan = () => {
             <option value="" disabled>
               Seleccione un país
             </option>
-            {flightData.map((item, idx) => (
-              <option key={`pais-${idx}`} value={item.PAI_NOMBRE_PAIS}>
-                {item.PAI_NOMBRE_PAIS}
+            {uniquePaises.map((pais, idx) => (
+              <option key={`pais-${idx}`} value={pais}>
+                {pais}
               </option>
             ))}
           </select>
@@ -98,11 +107,12 @@ const CreateFlightPlan = () => {
             value={form.aeropuerto || ""}
             onChange={handleChange}
             required
+            disabled={!form.pais} // Deshabilita si no hay país seleccionado
           >
             <option value="" disabled>
               Seleccione un aeropuerto
             </option>
-            {flightData.map((item, idx) => (
+            {aeropuertosFiltrados.map((item, idx) => (
               <option
                 key={`aeropuerto-${idx}`}
                 value={item.AER_NOMBRE_AEROPUERTO}
