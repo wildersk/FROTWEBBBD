@@ -8,6 +8,7 @@ import {
 import { AuthProvider } from "./auth/context/AuthContext";
 import RoleGuard from "./auth/components/RoleGuard/RoleGuard";
 import LoadingSpinner from "./shared/components/LoadingSpinner";
+import CompraTicket from "./features/appUsu/CompraTicket";
 
 // Componentes lazy-loaded
 const Login = lazy(() => import("./auth/pages/Login/Login"));
@@ -75,7 +76,10 @@ const ControlVueloDashboard = lazy(() =>
 const CheckDashboard = lazy(() =>
   import("./features/checking/pages/Dashboard/Dashboard")
 );
-
+// Páginas de check (ejemplo)
+const DashboardappUsu = lazy(() =>
+  import("./features/appUsu/pages/Dashboard/DashboardappUsu")
+);
 function App() {
   return (
     <Router>
@@ -158,6 +162,21 @@ function App() {
               <Route path="/check/dashboard" element={<CheckDashboard />} />
               {/* Agrega aquí más rutas si tienes más páginas para este rol */}
             </Route>
+
+            {/* Rutas protegidas para pasajero/usuario */}
+
+            <Route element={<RoleGuard allowedRoles={["appUsu"]} />}>
+              <Route
+                path="/appUsu/pages/dashboard"
+                element={<DashboardappUsu />}
+              />
+              <Route
+                path="/appUsu/pages/CompraTicket"
+                element={<CompraTicket />}
+              />
+
+            </Route>
+
 
             {/* Redirecciones */}
             <Route path="/" element={<Navigate to="/login" replace />} />

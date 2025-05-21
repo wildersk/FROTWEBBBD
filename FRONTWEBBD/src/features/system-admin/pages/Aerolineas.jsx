@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const Aerolineas = () => {
   const [aerolineas, setAerolineas] = useState([]);
-  const [formData, setFormData] = useState({ nombre: '', codigo: '', modelosDisponibles: '' });
+  const [formData, setFormData] = useState({ nombre: '', correo: '', telefono: '' });
 
   useEffect(() => {
     fetch('http://localhost:3000/aerolineas')
@@ -20,7 +20,7 @@ const Aerolineas = () => {
 
     if (res.ok) {
       alert('Aerolínea registrada');
-      setFormData({ nombre: '', codigo: '', modelosDisponibles: '' });
+      setFormData({ nombre: '', correo: '', telefono: '' });
       const lista = await fetch('http://localhost:3000/aerolineas').then(r => r.json());
       setAerolineas(lista);
     } else {
@@ -28,42 +28,39 @@ const Aerolineas = () => {
     }
   };
 
-  // Render the list of aerolineas
   return (
-    <div>
-      <h2>Registrar Aerolínea</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Nombre"
-          value={formData.nombre}
-          onChange={e => setFormData({ ...formData, nombre: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Código"
-          value={formData.codigo}
-          onChange={e => setFormData({ ...formData, codigo: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Modelos Disponibles"
-          value={formData.modelosDisponibles}
-          onChange={e => setFormData({ ...formData, modelosDisponibles: e.target.value })}
-          required
-        />
+    <div style={{ padding: '2rem', color: 'white' }}>
+      <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Registrar Aerolínea</h2>
+      <form onSubmit={handleSubmit} style={{ marginBottom: '2rem', display: 'flex', gap: '1rem' }}>
+        <input type="text" placeholder="Nombre" value={formData.nombre} onChange={e => setFormData({ ...formData, nombre: e.target.value })} required />
+        <input type="email" placeholder="Correo" value={formData.correo} onChange={e => setFormData({ ...formData, correo: e.target.value })} required />
+        <input type="text" placeholder="Teléfono" value={formData.telefono} onChange={e => setFormData({ ...formData, telefono: e.target.value })} required />
         <button type="submit">Registrar</button>
       </form>
-      <h2>Lista de Aerolíneas</h2>
-      <ul>
-        {aerolineas.map((aerolinea, idx) => (
-          <li key={idx}>
-            {aerolinea.nombre} ({aerolinea.codigo}) - Modelos: {aerolinea.modelosDisponibles}
-          </li>
-        ))}
-      </ul>
+
+      <h2 style={{ fontSize: '1.5rem' }}>Lista de Aerolíneas</h2>
+      {aerolineas.length === 0 ? (
+        <p>No hay aerolíneas registradas.</p>
+      ) : (
+        <table border="1" cellPadding="10">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+            </tr>
+          </thead>
+          <tbody>
+            {aerolineas.map((a) => (
+              <tr key={a.AER_AEROLINEA_ID}>
+                <td>{a.AER_NOMBRE_AEROLINEA}</td>
+                <td>{a.AER_CORREO}</td>
+                <td>{a.AER_TELEFONO}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

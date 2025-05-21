@@ -82,8 +82,8 @@ export const AuthProvider = ({ children }) => {
         navigate("/controlvuelo/dashboard");
       } else if (authenticatedUser.role === "check") {
         navigate("/check/dashboard");
-      } else if (authenticatedUser.role === "pasajero") {
-        navigate("/appUsu/dashboard/dashboardappUsu");
+      } else if (authenticatedUser.role === "appUsu") {
+        navigate("/appUsu/dashboard");
       }
 
       return true;

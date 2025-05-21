@@ -1,6 +1,6 @@
-// src/components/AdminDashboard.jsx
+// AdminDashboard.jsx
 import { Link, useLocation } from 'react-router-dom';
-import './AdminDashboard.css'; // Importamos estilos CSS
+import './AdminDashboard.css';
 
 const links = [
   { to: "/system-admin/Aeropuertos", label: "Aeropuertos" },
@@ -31,3 +31,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+

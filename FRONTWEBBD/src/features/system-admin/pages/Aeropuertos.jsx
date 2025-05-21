@@ -1,3 +1,4 @@
+// Aeropuertos.jsx
 import React, { useEffect, useState } from 'react';
 
 const Aeropuertos = () => {
@@ -11,28 +12,19 @@ const Aeropuertos = () => {
     setAeropuertos(data);
   };
 
-  useEffect(() => {
-    fetchAeropuertos();
-  }, []);
+  useEffect(() => { fetchAeropuertos(); }, []);
 
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const url = editId
-      ? `http://localhost:3000/aeropuertos/${editId}`
-      : 'http://localhost:3000/aeropuertos';
-
+    const url = editId ? `http://localhost:3000/aeropuertos/${editId}` : 'http://localhost:3000/aeropuertos';
     const method = editId ? 'PUT' : 'POST';
-
     const res = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
-
     if (res.ok) {
       setForm({ codigo: '', nombre: '', ciudadId: '' });
       setEditId(null);
@@ -40,9 +32,9 @@ const Aeropuertos = () => {
     }
   };
 
-  const handleEdit = aer => {
-    setForm({ codigo: aer[1], nombre: aer[2], ciudadId: aer[3] });
-    setEditId(aer[0]);
+  const handleEdit = a => {
+    setForm({ codigo: a.AER_CODIGO_IATA, nombre: a.AER_NOMBRE_AEROPUERTO, ciudadId: a.CIU_CIUDAD_ID });
+    setEditId(a.AER_AEROPUERTO_ID);
   };
 
   const handleDelete = async id => {
@@ -52,30 +44,28 @@ const Aeropuertos = () => {
   };
 
   return (
-    <div>
+    <div style={{ padding: '2rem', color: 'white' }}>
       <h2>Aeropuertos</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="codigo" value={form.codigo} onChange={handleChange} placeholder="Código IATA" />
-        <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" />
-        <input name="ciudadId" value={form.ciudadId} onChange={handleChange} placeholder="ID Ciudad" />
+      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+        <input name="codigo" value={form.codigo} onChange={handleChange} placeholder="Código IATA" required />
+        <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" required />
+        <input name="ciudadId" value={form.ciudadId} onChange={handleChange} placeholder="ID Ciudad" required />
         <button type="submit">{editId ? 'Actualizar' : 'Registrar'}</button>
       </form>
 
-      <table>
+      <table border="1" cellPadding="10">
         <thead>
-          <tr>
-            <th>Código</th><th>Nombre</th><th>Ciudad ID</th><th>Acciones</th>
-          </tr>
+          <tr><th>Código</th><th>Nombre</th><th>Ciudad ID</th><th>Acciones</th></tr>
         </thead>
         <tbody>
-          {aeropuertos.map(aer => (
-            <tr key={aer[0]}>
-              <td>{aer[1]}</td>
-              <td>{aer[2]}</td>
-              <td>{aer[3]}</td>
+          {aeropuertos.map(a => (
+            <tr key={a.AER_AEROPUERTO_ID}>
+              <td>{a.AER_CODIGO_IATA}</td>
+              <td>{a.AER_NOMBRE_AEROPUERTO}</td>
+              <td>{a.CIU_CIUDAD_ID}</td>
               <td>
-                <button onClick={() => handleEdit(aer)}>✏️</button>
-                <button onClick={() => handleDelete(aer[0])}>🗑️</button>
+                <button onClick={() => handleEdit(a)}>Editar</button>
+                <button onClick={() => handleDelete(a.AER_AEROPUERTO_ID)}>Eliminar</button>
               </td>
             </tr>
           ))}
