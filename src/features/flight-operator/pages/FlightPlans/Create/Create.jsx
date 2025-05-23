@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./CreateFlightPlan.module.css";
-
+//-------------------------------------------------------------
+// +++++++++punto de guardado+++++++++++++
 const CreateFlightPlan = () => {
   const [flightData, setFlightData] = useState([]);
   const [tipoNave, setTipoNave] = useState([]);
@@ -41,12 +42,20 @@ const CreateFlightPlan = () => {
     console.log("Datos del formulario:", form);
   };
 
+  const uniquePaises = Array.from(
+    new Set(flightData.map((item) => item.PAI_NOMBRE_PAIS))
+  );
+
+  const aeropuertosFiltrados = form.pais
+    ? flightData.filter((item) => item.PAI_NOMBRE_PAIS === form.pais)
+    : [];
+
   return (
     <div className={styles.div}>
       <h1 className={styles.h1}>Crear Plan de Vuelo</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Número de vuelo:</label>
+          <label>Número de IATA : </label>
           <input
             type="text"
             name="flightNumber"
@@ -56,17 +65,65 @@ const CreateFlightPlan = () => {
           />
         </div>
         <div>
-          <label>Destino:</label>
-          <input
-            type="text"
-            name="destination"
-            value={form.destination}
+          <label>Seleccionar nave: </label>
+          <select
+            name="nave"
+            value={form.nave || ""}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="" disabled>
+              Seleccione una nave
+            </option>
+            {tipoNave.map((item, idx) => (
+              <option key={`tipoNave-${idx}`} value={item.TIN_NOMBRE_TIPO}>
+                {item.TIN_NOMBRE_TIPO}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <label>Fecha:</label>
+          <label>Seleccionar País: </label>
+          <select
+            name="pais"
+            value={form.pais || ""}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Seleccione un país
+            </option>
+            {uniquePaises.map((pais, idx) => (
+              <option key={`pais-${idx}`} value={pais}>
+                {pais}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Seleccionar aeropuerto: </label>
+          <select
+            name="aeropuerto"
+            value={form.aeropuerto || ""}
+            onChange={handleChange}
+            required
+            disabled={!form.pais} // Deshabilita si no hay país seleccionado
+          >
+            <option value="" disabled>
+              Seleccione un aeropuerto
+            </option>
+            {aeropuertosFiltrados.map((item, idx) => (
+              <option
+                key={`aeropuerto-${idx}`}
+                value={item.AER_NOMBRE_AEROPUERTO}
+              >
+                {item.AER_NOMBRE_AEROPUERTO}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Fecha de Salida :</label>
           <input
             type="date"
             name="date"
@@ -76,7 +133,7 @@ const CreateFlightPlan = () => {
           />
         </div>
         <div>
-          <label>Hora:</label>
+          <label>Hora de salida :</label>
           <input
             type="time"
             name="time"
@@ -85,13 +142,22 @@ const CreateFlightPlan = () => {
             required
           />
         </div>
+
         <div>
-          <label>Observación:</label>
+          <label>Fecha de llegada aproximada :</label>
           <input
-            type="text"
-            name="observation"
-            value={form.observation}
+            type="date"
+            name="arrivalDate"
+            value={form.arrivalDate || ""}
             onChange={handleChange}
+            required
+          />
+          <input
+            type="time"
+            name="arrivalTime"
+            value={form.arrivalTime || ""}
+            onChange={handleChange}
+            required
           />
         </div>
         <button type="submit">Crear Plan</button>

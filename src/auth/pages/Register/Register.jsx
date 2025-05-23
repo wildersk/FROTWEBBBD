@@ -1,45 +1,50 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
-import AuthForm from "../../components/AuthForm/AuthForm";
+import authService from "../../services/authService";
 
-export default function Register() {
+const Register = () => {
   const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "flight_operator", // Rol por defecto
+    nombre: "",
+    apellido: "",
+    correo: "",
+    telefono: "",
+    nit: "",
+    edad: "",
+    sexo: "",
+    usuariocontra: "",
   });
   const [error, setError] = useState("");
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!userData.email || !userData.password || !userData.name) {
+    // Validación básica
+    if (
+      !userData.nombre ||
+      !userData.apellido ||
+      !userData.correo ||
+      !userData.telefono ||
+      !userData.nit ||
+      !userData.edad ||
+      !userData.sexo ||
+      !userData.usuariocontra
+    ) {
       setError("Por favor completa todos los campos");
       return;
     }
 
     try {
-      // Aquí deberías llamar a authService.register(userData) si tienes backend
-      // Simulamos registro exitoso
-      await login({
-        email: userData.email,
-        password: userData.password,
-      });
-      navigate("/flight-operator/dashboard");
+      await authService.register(userData);
+      navigate("/login");
     } catch (error) {
-      setError(error.message || "Error en el registro");
+      setError(error.response?.data?.message || "Error en el registro");
     }
   };
 
@@ -64,66 +69,126 @@ export default function Register() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="name" className="sr-only">
+              <label htmlFor="nombre" className="sr-only">
                 Nombre
               </label>
               <input
-                id="name"
-                name="name"
+                id="nombre"
+                name="nombre"
                 type="text"
                 required
-                value={userData.name}
+                value={userData.nombre}
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Nombre completo"
+                placeholder="Nombre"
               />
             </div>
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email
+              <label htmlFor="apellido" className="sr-only">
+                Apellido
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id="apellido"
+                name="apellido"
+                type="text"
                 required
-                value={userData.email}
+                value={userData.apellido}
+                onChange={handleChange}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Apellido"
+              />
+            </div>
+            <div>
+              <label htmlFor="correo" className="sr-only">
+                Correo
+              </label>
+              <input
+                id="correo"
+                name="correo"
+                type="email"
+                required
+                value={userData.correo}
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Correo electrónico"
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label htmlFor="telefono" className="sr-only">
+                Teléfono
+              </label>
+              <input
+                id="telefono"
+                name="telefono"
+                type="text"
+                required
+                value={userData.telefono}
+                onChange={handleChange}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Teléfono"
+              />
+            </div>
+            <div>
+              <label htmlFor="nit" className="sr-only">
+                NIT
+              </label>
+              <input
+                id="nit"
+                name="nit"
+                type="text"
+                required
+                value={userData.nit}
+                onChange={handleChange}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="NIT"
+              />
+            </div>
+            <div>
+              <label htmlFor="edad" className="sr-only">
+                Edad
+              </label>
+              <input
+                id="edad"
+                name="edad"
+                type="number"
+                required
+                value={userData.edad}
+                onChange={handleChange}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Edad"
+              />
+            </div>
+            <div>
+              <label htmlFor="sexo" className="sr-only">
+                Sexo
+              </label>
+              <select
+                id="sexo"
+                name="sexo"
+                required
+                value={userData.sexo}
+                onChange={handleChange}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+              >
+                <option value="">Selecciona tu sexo</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="usuariocontra" className="sr-only">
                 Contraseña
               </label>
               <input
-                id="password"
-                name="password"
+                id="usuariocontra"
+                name="usuariocontra"
                 type="password"
-                autoComplete="new-password"
                 required
-                value={userData.password}
+                value={userData.usuariocontra}
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Contraseña"
               />
-            </div>
-            <div>
-              <label htmlFor="role" className="sr-only">
-                Rol
-              </label>
-              <select
-                id="role"
-                name="role"
-                value={userData.role}
-                onChange={handleChange}
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              >
-                <option value="flight_operator">Operador de Vuelo</option>
-                <option value="system_admin">Administrador</option>
-              </select>
             </div>
           </div>
 
@@ -148,4 +213,6 @@ export default function Register() {
       </div>
     </div>
   );
-}
+};
+
+export default Register;

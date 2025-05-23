@@ -8,90 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Función de login mejorada
-  const login = (username, password) => {
-    // Simulación de autenticación
-    let authenticatedUser = null;
-
-    if (username === "operador" && password === "123") {
-      authenticatedUser = {
-        username,
-        role: "flight_operator",
-        name: "Operador de Vuelo",
-      };
-    } else if (username === "admin" && password === "123") {
-      authenticatedUser = {
-        username,
-        role: "system_admin",
-        name: "Administrador",
-      };
-    } else if (username === "DGAC" && password === "123") {
-      authenticatedUser = {
-        username,
-        role: "DGAC",
-        name: "DGAC",
-      };
-    } else if (username === "segAero" && password === "123") {
-      authenticatedUser = {
-        username,
-        role: "segAero",
-        name: "SegAero",
-      };
-    } else if (username === "usuReports" && password === "123") {
-      authenticatedUser = {
-        username,
-        role: "usuReports",
-        name: "usureports",
-      };
-    } else if (username === "controlvuelo" && password === "123") {
-      authenticatedUser = {
-        username,
-        role: "controlVuelo",
-        name: "Control de Vuelo",
-      };
-    } else if (username === "check" && password === "123") {
-      authenticatedUser = {
-        username,
-        role: "check",
-        name: "Check",
-      };
-    }
-
-    if (authenticatedUser) {
-      setUser(authenticatedUser);
-      localStorage.setItem("user", JSON.stringify(authenticatedUser));
-
-      // Redirigir según el rol
-      if (authenticatedUser.role === "flight_operator") {
-        navigate("/flight-operator/dashboard");
-      } else if (authenticatedUser.role === "system_admin") {
-        navigate("/system-admin/dashboard");
-      } else if (authenticatedUser.role === "DGAC") {
-        navigate("/DGAC/dashboard");
-      } else if (authenticatedUser.role === "segAero") {
-        navigate("/segAero/dashboard");
-      } else if (authenticatedUser.role === "usuReports") {
-        navigate("/usuReports/dashboard");
-      } else if (authenticatedUser.role === "controlVuelo") {
-        navigate("/controlvuelo/dashboard");
-      } else if (authenticatedUser.role === "check") {
-        navigate("/check/dashboard");
-      }
-
-      return true;
-    }
-
-    return false;
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
-  // Verificar sesión al cargar
   useEffect(() => {
+    // Mantener sesión si hay usuario guardado
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -99,8 +17,14 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
